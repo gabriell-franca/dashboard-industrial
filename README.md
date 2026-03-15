@@ -4,6 +4,7 @@ Dashboard de monitoramento industrial em tempo real, desenvolvido como desafio t
 
 ![Dashboard Preview](./docs/preview.png)
 
+
 ---
 
 ## Sobre o Projeto
@@ -67,7 +68,7 @@ src/
 ### Instalação
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/dashboard-industrial.git
+git clone https://github.com/gabriell-franca/dashboard-industrial.git
 
 # Entre na pasta
 cd dashboard-industrial
@@ -111,8 +112,11 @@ Cada seção do dashboard é um componente independente com suas próprias props
 ---
 
 ## Screenshots
+(./docs/preview.png)
+(./docs/preview2.png)
+(./docs/previewdark.png)
+(./docs/previewdark2.png)
 
-> Adicione aqui screenshots do dashboard em modo escuro e modo claro.
 
 ---
 
