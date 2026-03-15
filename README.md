@@ -112,11 +112,10 @@ Cada seção do dashboard é um componente independente com suas próprias props
 ---
 
 ## Screenshots
-!(./docs/preview.png)
-!(./docs/preview2.png)
-!(./docs/previewdark.png)
-!(./docs/previewdark2.png)
-
+![Preview Modo Claro](./docs/preview.png)
+![Preview Modo Claro 2](./docs/preview2.png)
+![Preview Modo Escuro](./docs/previewdark.png)
+![Preview Modo Escuro 2](./docs/previewdark2.png)
 
 ---
 
