@@ -4,7 +4,6 @@ Dashboard de monitoramento industrial em tempo real, desenvolvido como desafio t
 
 ![Dashboard Preview](./docs/preview.png)
 
-
 ---
 
 ## Sobre o Projeto
@@ -25,16 +24,35 @@ Sistema de monitoramento de uma máquina industrial (Misturador M-01) com atuali
 
 ## Funcionalidades
 
-- Monitoramento em tempo real (atualização a cada 3 segundos)
+### Monitoramento em Tempo Real
+- Atualização automática a cada 3 segundos
 - Card de estado da máquina (Ligada, Desligada, Manutenção, Erro)
 - Cards de métricas com indicadores de tendência (Temperatura, RPM, Eficiência, Tempo de Operação)
-- Gráfico de histórico com dois eixos (temperatura/eficiência e RPM)
-- Sistema de alertas com 3 níveis: INFO, AVISO e CRÍTICO
-- Alerta sonoro para alertas críticos via Web Audio API
-- Métricas de eficiência OEE com barras de progresso
-- Simulação de perda de conexão
-- Modo escuro e modo claro
 - Tempo de operação crescente em tempo real
+- Simulação de perda de conexão com indicador visual no header
+
+### Visualização de Dados
+- Gráfico de histórico com dois eixos Y (temperatura/eficiência e RPM)
+- Tooltip com data e hora exata de cada leitura
+- Linha de referência do limite máximo de temperatura
+- Animações suaves nos cards a cada atualização
+
+### Sistema de Alertas
+- 3 níveis de severidade: INFO, AVISO e CRÍTICO
+- Alerta sonoro via Web Audio API para alertas críticos
+- Tempo decorrido desde cada alerta
+- Histórico persistente com LocalStorage — alertas não somem ao recarregar
+- Botão para limpar histórico de alertas
+
+### Métricas de Eficiência (OEE)
+- OEE Geral em destaque
+- Disponibilidade, Performance e Qualidade com barras de progresso coloridas
+- Verde ≥ 90%, Amarelo ≥ 75%, Vermelho abaixo de 75%
+
+### Interface
+- Modo escuro e modo claro
+- Design responsivo
+- Acessibilidade com `aria-label` e `role` nos elementos interativos
 
 ---
 
@@ -44,10 +62,10 @@ src/
 └── app/
     ├── components/
     │   ├── CardEstadoMaquina.tsx  # Card de estado da máquina
-    │   ├── CardMetrica.tsx        # Card reutilizável de métricas
+    │   ├── MetricCard.tsx         # Card reutilizável de métricas com animação
     │   ├── GraficoHistorico.tsx   # Gráfico de histórico com Recharts
-    │   ├── Header.tsx             # Cabeçalho com logo e status
-    │   ├── MetricasEficiencia.tsx # Painel OEE
+    │   ├── Header.tsx             # Cabeçalho com logo, status e tema
+    │   ├── MetricasEficiencia.tsx # Painel OEE com barras de progresso
     │   └── PainelAlertas.tsx      # Lista de alertas em tempo real
     ├── lib/
     │   └── simulator.ts           # Simulador de dados da máquina
@@ -104,7 +122,13 @@ A atualização em tempo real é feita com `setInterval` a cada 3 segundos via `
 O gráfico usa dois eixos Y para que temperatura/eficiência (0–100) e RPM (0–1600) sejam lidos com precisão sem distorção de escala.
 
 ### Web Audio API para alertas sonoros
-Usado a API nativa do navegador para gerar o bipe de alerta crítico, sem necessidade de instalar bibliotecas externas de áudio.
+Usada a API nativa do navegador para gerar o bipe de alerta crítico, sem necessidade de instalar bibliotecas externas de áudio.
+
+### LocalStorage para persistência
+Os alertas são salvos automaticamente no LocalStorage do navegador a cada atualização, mantendo o histórico mesmo após recarregar a página.
+
+### Animações com Tailwind
+As animações dos cards usam `translate-y` e `opacity` do Tailwind combinados com `useState` e `useEffect` para criar um efeito de placar — o valor antigo sai por cima e o novo entra por baixo.
 
 ### Componentização
 Cada seção do dashboard é um componente independente com suas próprias props tipadas, facilitando manutenção e reutilização.
@@ -112,6 +136,7 @@ Cada seção do dashboard é um componente independente com suas próprias props
 ---
 
 ## Screenshots
+
 ![Preview Modo Claro](./docs/preview.png)
 ![Preview Modo Claro 2](./docs/preview2.png)
 ![Preview Modo Escuro](./docs/previewdark.png)
@@ -121,4 +146,4 @@ Cada seção do dashboard é um componente independente com suas próprias props
 
 ## Autor
 
-**Gabriel** — Desenvolvido como desafio técnico para STW
+**Gabriel de França** — Desenvolvido como desafio técnico para STW
