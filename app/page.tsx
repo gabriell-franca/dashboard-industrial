@@ -30,8 +30,6 @@ export default function Pagina() {
   useEffect(() => {
     localStorage.setItem("alertas-dashboard", JSON.stringify(alertas))
   }, [alertas])
-
-
   useEffect(() => {
     const status = gerarStatusMaquina()
     setMaquina(status)
@@ -134,7 +132,7 @@ export default function Pagina() {
       />
       <main className="px-8 pb-8">
 
-        <div className="grid grid-cols-5 gap-4 mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-8">
           <CardEstadoMaquina
             estado={maquina.estado}
             modoEscuro={modoEscuro}
@@ -166,7 +164,7 @@ export default function Pagina() {
         </div>
         <GraficoHistorico dados={historico} modoEscuro={modoEscuro} />
 
-        <div className="grid grid-cols-2 gap-6 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <PainelAlertas
             alertas={alertas}
             modoEscuro={modoEscuro}

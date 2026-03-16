@@ -8,17 +8,17 @@ Dashboard de monitoramento industrial em tempo real, desenvolvido como desafio t
 
 ## Sobre o Projeto
 
-Sistema de monitoramento de uma máquina industrial (Misturador M-01) com atualização de dados em tempo real, sistema de alertas, métricas de eficiência OEE e suporte a modo escuro/claro.
+Desenvolvi esse dashboard para monitorar uma máquina industrial (Misturador M-01) em tempo real. O sistema mostra o estado da máquina, métricas como temperatura e RPM, gera alertas automáticos quando os valores saem do normal e exibe métricas de eficiência OEE.
 
 ---
 
 ## Tecnologias Utilizadas
 
-- **Next.js 15** — Framework React com App Router
-- **TypeScript** — Tipagem estática obrigatória
-- **Tailwind CSS** — Estilização utilitária
-- **Recharts** — Biblioteca de gráficos
-- **Web Audio API** — Alertas sonoros nativos do navegador
+- **Next.js 15** — Framework que usei para construir a aplicação React
+- **TypeScript** — Versão do JavaScript com tipagem, obrigatório no desafio
+- **Tailwind CSS** — Biblioteca de estilos que usei para estilizar tudo sem escrever CSS manual
+- **Recharts** — Biblioteca de gráficos para React
+- **Web Audio API** — API nativa do navegador para gerar sons de alerta
 
 ---
 
@@ -110,28 +110,61 @@ npm start
 
 ---
 
+## Arquitetura do Sistema
+
+### Frontend
+Usei o **Next.js 15** com App Router por ser o framework recomendado para projetos React modernos. Os componentes do dashboard usam `"use client"` porque precisam atualizar a tela em tempo real conforme os dados mudam.
+
+### Backend Simulado
+Como ainda estou aprendendo sobre bancos de dados, optei por criar um simulador em TypeScript (`src/app/lib/simulator.ts`) que gera os dados da máquina automaticamente. Ele funciona como se fosse um backend, enviando valores dentro de faixas que fazem sentido para uma máquina industrial real:
+
+| Métrica | Faixa Normal | Quando gera alerta |
+|---------|-------------|-----------------|
+| Temperatura | 65°C – 95°C | Acima de 88°C → CRÍTICO |
+| RPM | 900 – 1500 | Abaixo de 1000 → AVISO |
+| Eficiência | 85% – 98% | — |
+| OEE | 88% – 96% | — |
+
+Se fosse um projeto real, esse simulador seria substituído por uma conexão com sensores ou uma API.
+
+---
+
 ## Decisões Técnicas
 
-### Simulação de dados
-Optei por um simulador em TypeScript (`simulator.ts`) em vez de SQLite para simplificar a execução do projeto — sem necessidade de configurar banco de dados. Os dados são gerados aleatoriamente dentro de faixas realistas de operação industrial.
+### Por que Next.js?
+Foi o framework que aprendi durante o desenvolvimento do projeto. Ele já vem configurado com TypeScript e Tailwind, o que facilitou muito o início.
 
-### Tempo real sem WebSocket
-A atualização em tempo real é feita com `setInterval` a cada 3 segundos via `useEffect`. Para produção, o ideal seria substituir por WebSocket ou Server-Sent Events conectado a um backend real.
+### Por que simulador em vez de SQLite?
+Tentei configurar o SQLite mas percebi que precisaria de um servidor backend separado, o que aumentaria muito a complexidade. Com o simulador, qualquer pessoa consegue rodar o projeto com apenas `npm install` e `npm run dev`, sem precisar configurar nada extra.
 
-### Dois eixos no gráfico
-O gráfico usa dois eixos Y para que temperatura/eficiência (0–100) e RPM (0–1600) sejam lidos com precisão sem distorção de escala.
+### Por que dois eixos Y no gráfico?
+Percebi que temperatura e eficiência ficam entre 0 e 100, mas o RPM chega até 1600. Com um único eixo, as linhas de temperatura e eficiência ficavam todas espremidas na parte de baixo e não dava pra ler nada. Separar em dois eixos resolveu o problema.
 
-### Web Audio API para alertas sonoros
-Usada a API nativa do navegador para gerar o bipe de alerta crítico, sem necessidade de instalar bibliotecas externas de áudio.
+### Por que Web Audio API para alertas sonoros?
+Pesquisando sobre como gerar sons no navegador, encontrei a Web Audio API que já vem nativa — sem precisar instalar nenhuma biblioteca. Gera um bipe curto quando o alerta é crítico.
 
-### LocalStorage para persistência
-Os alertas são salvos automaticamente no LocalStorage do navegador a cada atualização, mantendo o histórico mesmo após recarregar a página.
+### Por que LocalStorage para persistência?
+Queria que os alertas não sumissem ao recarregar a página. O LocalStorage foi a solução mais simples que encontrei para isso, salvando os dados direto no navegador.
 
-### Animações com Tailwind
-As animações dos cards usam `translate-y` e `opacity` do Tailwind combinados com `useState` e `useEffect` para criar um efeito de placar — o valor antigo sai por cima e o novo entra por baixo.
+### Por que a animação de "placar" nos cards?
+Queria deixar claro visualmente quando um valor muda. Testei algumas opções e achei que o efeito de slide — onde o número antigo sai por cima e o novo entra por baixo — ficou mais elegante do que só piscar.
 
-### Componentização
-Cada seção do dashboard é um componente independente com suas próprias props tipadas, facilitando manutenção e reutilização.
+---
+
+## Dados de Teste
+
+Os dados são gerados automaticamente pelo simulador ao rodar o projeto. Caso queira testar cenários específicos, é possível editar os valores em `src/app/lib/simulator.ts`:
+```ts
+// Para forçar temperatura crítica e ver o alerta CRÍTICO (acima de 88°C):
+const temperatura = aleatorio(89, 95)
+
+// Para forçar RPM baixo e ver o alerta AVISO (abaixo de 1000):
+const rpm = aleatorio(900, 999)
+
+// Para voltar ao comportamento normal:
+const temperatura = aleatorio(65, 88)
+const rpm = aleatorio(1000, 1500)
+```
 
 ---
 

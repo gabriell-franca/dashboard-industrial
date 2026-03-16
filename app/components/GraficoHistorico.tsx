@@ -19,7 +19,7 @@ function TooltipPersonalizado({ active, payload }: any) {
         const data = payload[0]?.payload?.data
         return (
             <div className="bg-gray-900 border border-gray-600 rounded-lg p-3 text-sm">
-                {/* data e hora da leitura */}
+                {/*data e hora da leitura */}
                 <p className="text-gray-400 text-xs mb-2 border-b border-gray-700 pb-2">
                     📅 {data} às {horario}
                 </p>
@@ -37,14 +37,14 @@ function TooltipPersonalizado({ active, payload }: any) {
 }
 
 
-// passando a interface pro grafico pra ele entender a montagem
+//passando a interface pro grafico pra ele entender a montagem
 export default function GraficoHistorico({ dados, modoEscuro }: PropsGrafico) {
     const dadosFormatados = dados.map((ponto, indice) => ({
         leitura: `${indice + 1}`,
         temperatura: ponto.temperatura,
         rpm: ponto.rpm,
         eficiencia: ponto.eficiencia,
-        // formata a data/hora da leitura
+        //formata a data/hora da leitura
         horario: new Date(ponto.timestamp).toLocaleTimeString("pt-BR", {
             hour: "2-digit",
             minute: "2-digit",
@@ -61,8 +61,8 @@ export default function GraficoHistorico({ dados, modoEscuro }: PropsGrafico) {
                 <span className="text-gray-400 text-sm">Últimas {dados.length} leituras</span>
             </div>
 
-            {/* legenda */}
-            <div className="flex gap-6 mb-4 text-sm">
+            {/*legenda */}
+            <div className="hidden sm:flex gap-6 mb-4 text-sm">
                 <div className="flex items-center gap-2">
                     <div className="w-4 h-1 bg-red-400 rounded" />
                     <span className="text-gray-400">Temperatura (°C) — Eixo esquerdo</span>
@@ -87,7 +87,7 @@ export default function GraficoHistorico({ dados, modoEscuro }: PropsGrafico) {
                         label={{ value: "Leituras", position: "insideBottom", offset: -2, fill: "#556275", fontSize: 12 }}
                     />
 
-                    {/* eixo esquerdo, temperatura/eficiencia*/}
+                    {/*eixo esquerdo, temperatura/eficiencia*/}
                     <YAxis
                         yAxisId="esquerda"
                         stroke="#556275"
@@ -95,7 +95,7 @@ export default function GraficoHistorico({ dados, modoEscuro }: PropsGrafico) {
                         label={{ value: "°C / %", angle: -90, position: "insideLeft", fill: "#556275", fontSize: 12 }}
                     />
 
-                    {/* eixo direito rpm*/}
+                    {/*eixo direito rpm*/}
                     <YAxis yAxisId="direita"
                         orientation="right"
                         stroke="#556275"
@@ -105,7 +105,7 @@ export default function GraficoHistorico({ dados, modoEscuro }: PropsGrafico) {
 
                     <Tooltip content={<TooltipPersonalizado />} />
 
-                    {/* linha de limite máximo de temperatura */}
+                    {/*linha de limite máximo de temperatura */}
                     <ReferenceLine yAxisId="esquerda" y={85} stroke="#EF4444" strokeDasharray="4 4" label={{ value: "Limite Temp.", fill: "#EF4444", fontSize: 11 }} />
 
                     <Line yAxisId="esquerda" type="monotone" dataKey="temperatura" name="Temperatura" stroke="#EF4444" strokeWidth={2} dot={false} activeDot={{ r: 5 }} />

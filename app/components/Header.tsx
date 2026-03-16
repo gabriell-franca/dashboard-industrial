@@ -14,14 +14,12 @@ export default function Header({ conectado, modoEscuro, alternarModo }: PropsHea
         <header className={`flex items-center justify-between px-8 py-4 border-b mb-8 ${modoEscuro ? "bg-gray-800 border-gray-700" : "bg-white border-slate-200 shadow-sm"}`}>
 
             {/*logo */}
-            <div className="w-24">
-                <Image
-                    src="/stwlogo.png"
+            <div className="w-16 sm:w-24">
+                <Image src="/stwlogo.png"
                     alt="Logo STW"
                     width={80}
                     height={40}
-                    style={{ objectFit: "contain" }}
-                />
+                    style={{ objectFit: "contain" }} />
             </div>
 
             {/*título centralizado */}
@@ -29,7 +27,7 @@ export default function Header({ conectado, modoEscuro, alternarModo }: PropsHea
                 <h1 className={`text-lg font-bold ${modoEscuro ? "text-white" : "text-slate-900"}`}>
                     Dashboard Industrial STW
                 </h1>
-                <p className={`text-xs ${modoEscuro ? "text-gray-400" : "text-slate-500"}`}>
+                <p className={`text-xs hidden sm:block ${modoEscuro ? "text-gray-400" : "text-slate-500"}`}>
                     Monitoramento em tempo real — Misturador M-01
                 </p>
             </div>
@@ -54,7 +52,9 @@ export default function Header({ conectado, modoEscuro, alternarModo }: PropsHea
                     aria-label={modoEscuro ? "Ativar modo claro" : "Ativar modo escuro"}
                     className="bg-gray-700 hover:bg-gray-600 transition-colors px-3 py-1.5 rounded-lg text-sm text-white"
                 >
-                    {modoEscuro ? "Modo Claro" : "Modo Escuro"}
+                    {/*em mobile só mostra claro/escuro e tablet/pc modo claro/escuro */}
+                    <span className="sm:hidden">{modoEscuro ? "claro" : "escuro"}</span>
+                    <span className="hidden sm:inline">{modoEscuro ? "Modo Claro" : "Modo Escuro"}</span>
                 </button>
 
             </div>
