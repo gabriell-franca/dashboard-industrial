@@ -1,3 +1,6 @@
+
+
+
 interface PropsEstado {
     estado: "RODANDO" | "PARADA" | "MANUTENCAO" | "ERRO"
     modoEscuro: boolean
@@ -46,16 +49,19 @@ export default function CardEstadoMaquina({ estado, modoEscuro }: PropsEstado) {
     const config = configEstado[estado]
 
     return (
-        <div className={`rounded-xl p-6 border ${config.borda} ${modoEscuro ? "bg-gray-800" : "bg-white shadow-sm"}`}>
+        <div className={`rounded-xl p-6 border transition-all duration-500 ${config.borda} ${modoEscuro ? "bg-gray-800" : "bg-white shadow-sm"}`}>
             <p className={`text-sm ${modoEscuro ? "text-gray-400" : "text-slate-500"}`}>Estado da Máquina</p>
             <p className={`text-3xl font-bold mt-2 ${config.cor}`}>
                 {config.label}
             </p>
             {/*badge de status */}
             <div className="mt-3">
-                <span className={`text-xs font-bold px-2 py-1 rounded-full ${config.fundo} ${config.cor} ${config.pulsar ? "animate-pulse" : ""}`}>
+                <span
+                    role="status"
+                    aria-label={`Status da máquina: ${config.status}`}
+                    className={`text-xs font-bold px-2 py-1 rounded-full ${config.fundo} ${config.cor} ${config.pulsar ? "animate-pulse" : ""}`}>
                     Status: {config.status}
-                </span> 
+                </span>
             </div>
         </div>
     )

@@ -3,7 +3,12 @@ import { Alerta } from "../types"
 interface PropsAlertas {
     alertas: Alerta[]
     modoEscuro: boolean
+
+
+    //botão pra limpar historico
+    onLimpar: () => void
 }
+
 
 //formata o tempo decorrido desde o alerta 
 //cada alerta mostra o tempo decorrido desde que foi gerado
@@ -32,14 +37,25 @@ const estiloNivel = {
 }
 
 //a borda lateral muda de cor conforme a severidade
-export default function PainelAlertas({ alertas, modoEscuro }: PropsAlertas) {
+export default function PainelAlertas({ alertas, modoEscuro, onLimpar }: PropsAlertas) {
     return (
         <div className={`rounded-xl p-6 border ${modoEscuro ? "bg-gray-800 border-gray-700" : "bg-white border-slate-200 shadow-sm"}`}>
             <div className="flex items-center justify-between mb-6">
                 <h2 className={`text-xl font-bold ${modoEscuro ? "text-white" : "text-slate-900"}`}>Alertas Recentes</h2>
-                <span className={`text-xs px-2 py-1 rounded-full ${modoEscuro ? "bg-gray-700 text-gray-300" : "bg-slate-200 text-slate-600"}`}>
-                    {alertas.length} alertas
-                </span>
+                <div className="flex items-center gap-2">
+                    <span className={`text-xs px-2 py-1 rounded-full ${modoEscuro ? "bg-gray-700 text-gray-300" : "bg-slate-200 text-slate-600"}`}>
+                        {alertas.length} alertas
+                    </span>
+                    {alertas.length > 0 && (
+                        <button
+                            onClick={onLimpar}
+                            aria-label="Limpar histórico de alertas"
+                            className="text-xs text-red-400 hover:text-red-300 transition-colors"
+                        >
+                            Limpar
+                        </button>
+                    )}
+                </div>
             </div>
 
             {alertas.length === 0 && (
@@ -48,7 +64,11 @@ export default function PainelAlertas({ alertas, modoEscuro }: PropsAlertas) {
                 </div>
             )}
 
-            <div className="space-y-3 max-h-64 overflow-y-auto">
+            <div
+                role="log"
+                aria-label="Lista de alertas recentes"
+                aria-live="polite"
+                className="space-y-3 max-h-64 overflow-y-auto">
                 {alertas.map(alerta => {
                     const estilo = estiloNivel[alerta.nivel]
                     return (
@@ -68,6 +88,20 @@ export default function PainelAlertas({ alertas, modoEscuro }: PropsAlertas) {
                         </div>
                     )
                 })}
+            </div>
+            <div className="flex items-center gap-2">
+                <span className={`text-xs px-2 py-1 rounded-full ${modoEscuro ? "bg-gray-700 text-gray-300" : "bg-slate-200 text-slate-600"}`}>
+                    {alertas.length} alertas
+                </span>
+                {alertas.length > 0 && (
+                    <button
+                        onClick={onLimpar}
+                        aria-label="Limpar histórico de alertas"
+                        className="text-xs text-red-400 hover:text-red-300 transition-colors"
+                    >
+                        Limpar
+                    </button>
+                )}
             </div>
         </div>
     )

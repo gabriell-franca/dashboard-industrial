@@ -38,7 +38,12 @@ export default function Header({ conectado, modoEscuro, alternarModo }: PropsHea
             <div className="flex items-center gap-4">
 
                 {/*status de conexão */}
-                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm ${conectado ? "bg-green-900 text-green-300" : "bg-red-900 text-red-300"}`}>
+                <div
+                    role="status"
+                    aria-live="polite"
+                    aria-label={conectado ? "Sistema conectado" : "Sistema sem conexão"}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm ${conectado ? "bg-green-900 text-green-300" : "bg-red-900 text-red-300"
+                        }`}>
                     <div className={`w-2 h-2 rounded-full ${conectado ? "bg-green-400 animate-pulse" : "bg-red-400"}`} />
                     {conectado ? "Conectado" : "Sem conexão"}
                 </div>
@@ -46,6 +51,7 @@ export default function Header({ conectado, modoEscuro, alternarModo }: PropsHea
                 {/*modo dark/light */}
                 <button
                     onClick={alternarModo}
+                    aria-label={modoEscuro ? "Ativar modo claro" : "Ativar modo escuro"}
                     className="bg-gray-700 hover:bg-gray-600 transition-colors px-3 py-1.5 rounded-lg text-sm text-white"
                 >
                     {modoEscuro ? "Modo Claro" : "Modo Escuro"}

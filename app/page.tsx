@@ -12,22 +12,26 @@ import CardEstadoMaquina from "./components/CardEstadoMaquina"
 
 export default function Pagina() {
   const [maquina, setMaquina] = useState<StatusMaquina | null>(null)
-  const [alertas, setAlertas] = useState<Alerta[]>([])
+  const [alertas, setAlertas] = useState<Alerta[]>(() => {
+    if (typeof window === "undefined") return []
+    try {
+      const salvo = localStorage.getItem("alertas-dashboard")
+      return salvo ? JSON.parse(salvo) : []
+    } catch {
+      return []
+    }
+  })
   const [historico, setHistorico] = useState<HistoricoMetrica[]>([])
   const [conectado, setConectado] = useState(true)
   const [modoEscuro, setModoEscuro] = useState(true)
   const [minutosOperacao, setMinutosOperacao] = useState(323)
 
-  //adicionando useeffect para contabilizar o tempo, 1 a cada 60s
+  //salva alertas no LocalStorage sempre que a lista muda
   useEffect(() => {
-    const intervalo = setInterval(() => {
-      setMinutosOperacao(anterior => anterior + 1)
-    }, 60000)
+    localStorage.setItem("alertas-dashboard", JSON.stringify(alertas))
+  }, [alertas])
 
-    return () => clearInterval(intervalo)
-  }, [])
 
-  //
   useEffect(() => {
     const status = gerarStatusMaquina()
     setMaquina(status)
@@ -163,7 +167,14 @@ export default function Pagina() {
         <GraficoHistorico dados={historico} modoEscuro={modoEscuro} />
 
         <div className="grid grid-cols-2 gap-6 mt-6">
-          <PainelAlertas alertas={alertas} modoEscuro={modoEscuro} />
+          <PainelAlertas
+            alertas={alertas}
+            modoEscuro={modoEscuro}
+            onLimpar={() => {
+              setAlertas([])
+              localStorage.removeItem("alertas-dashboard")
+            }}
+          />
           <MetricasEficiencia oee={maquina.oee} modoEscuro={modoEscuro} />
         </div>
       </main>

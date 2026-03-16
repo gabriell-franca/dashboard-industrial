@@ -1,7 +1,7 @@
-import { timeStamp } from "console";
-import { StatusMaquina, Alerta, HistoricoMetrica } from "../types";4
+import { StatusMaquina, Alerta, HistoricoMetrica } from "../types"
 
-//função pra gerar numero aleatorio entre x/y
+//simulador de dados da máquina — gera valores aleatórios entre x/y para simular um ambiente real
+//usado no lugar de um banco de dados real para fins de demonstração
 
 function aleatorio(min: number, max: number): number{
     return Math.round(Math.random() * (max - min) + min)
