@@ -170,9 +170,9 @@ const rpm = aleatorio(1000, 1500)
 ---
 
 ## Screenshots responsividade
-![Preview Modo Claro](./docs/previewcellwhite.png.png)
-![Preview Modo Claro 2](./docs/previewcelldark.png.png)
-![Preview Modo Escuro](./docs/previewdarkcell2.png.png.png)
+![Preview Modo Claro](./docs/previewcellwhite.png)
+![Preview Modo Claro 2](./docs/previewcelldark.png)
+![Preview Modo Escuro](./docs/previewdarkcell2.png)
 
 ## Screenshots gerais
 ![Preview Modo Claro](./docs/preview.png)
