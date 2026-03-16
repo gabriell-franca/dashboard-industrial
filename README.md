@@ -113,10 +113,11 @@ npm start
 ## Arquitetura do Sistema
 
 ### Frontend
-Usei o **Next.js 15** com App Router por ser o framework recomendado para projetos React modernos. Os componentes do dashboard usam `"use client"` porque precisam atualizar a tela em tempo real conforme os dados mudam.
+Usei o **Next.js 15** com App Router por ser o framework recomendado para projetos React hoje em dia. Os componentes do dashboard precisam do `"use client"` porque atualizam a tela em tempo real — sem isso, o Next.js tentaria renderizar tudo no servidor e os dados não atualizariam.
 
 ### Backend Simulado
-Como ainda estou aprendendo sobre bancos de dados, optei por criar um simulador em TypeScript (`src/app/lib/simulator.ts`) que gera os dados da máquina automaticamente. Ele funciona como se fosse um backend, enviando valores dentro de faixas que fazem sentido para uma máquina industrial real:
+Como ainda estou aprendendo sobre bancos de dados e APIs, optei por criar um simulador em TypeScript (`src/app/lib/simulator.ts`) que gera os dados da máquina automaticamente a cada atualização. Ele funciona como se fosse um backend simples, gerando valores dentro de faixas realistas de operação industrial:
+
 
 | Métrica | Faixa Normal | Quando gera alerta |
 |---------|-------------|-----------------|
@@ -168,8 +169,12 @@ const rpm = aleatorio(1000, 1500)
 
 ---
 
-## Screenshots
+## Screenshots responsividade
+![Preview Modo Claro](./docs/previewcellwhite.png.png)
+![Preview Modo Claro 2](./docs/previewcelldark.png.png)
+![Preview Modo Escuro](./docs/previewdarkcell2.png.png.png)
 
+## Screenshots gerais
 ![Preview Modo Claro](./docs/preview.png)
 ![Preview Modo Claro 2](./docs/preview2.png)
 ![Preview Modo Escuro](./docs/previewdark.png)
